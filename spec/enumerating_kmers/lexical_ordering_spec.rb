@@ -45,8 +45,17 @@ describe LexicalOrdering do
         expect(ordering.lexically_ordered_strings_of_length(length)).to include("CCC")
       end
 
-      it "does not include CAA" do
-        expect(ordering.lexically_ordered_strings_of_length(length)).to_not include("CAA")
+      it "includes CAA" do
+        expect(ordering.lexically_ordered_strings_of_length(length)).to include("CAA")
+      end
+    end
+
+    context "with alphabet TAGC and length 2" do
+      let(:ordering) { LexicalOrdering.new("TAGC") }
+      let(:length) { 2 }
+
+      it "includes TT" do
+        expect(ordering.lexically_ordered_strings_of_length(length)).to include("TT")
       end
     end
   end
