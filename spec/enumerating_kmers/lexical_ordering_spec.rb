@@ -54,9 +54,27 @@ describe LexicalOrdering do
       let(:ordering) { LexicalOrdering.new("TAGC") }
       let(:length) { 2 }
 
-      it "includes TT" do
-        expect(ordering.lexically_ordered_strings_of_length(length)).to include("TT")
+      it "matches the example solution from the website" do
+        expect(ordering.lexically_ordered_strings_of_length(length)).to eq([
+         "TT",
+         "TA",
+         "TG",
+         "TC",
+         "AT",
+         "AA",
+         "AG",
+         "AC",
+         "GT",
+         "GA",
+         "GG",
+         "GC",
+         "CT",
+         "CA",
+         "CG",
+         "CC",
+        ])
       end
+
     end
   end
 end

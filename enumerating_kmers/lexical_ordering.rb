@@ -9,6 +9,7 @@ class LexicalOrdering
   def lexically_ordered_strings_of_length(length)
     @permutation_length = length.to_i
     build_lexical_permutations(alphabet)
+    lexically_ordered_strings
   end
 
   private
@@ -20,18 +21,9 @@ class LexicalOrdering
       lexically_ordered_strings << current_string.join
     else
       remaining_alphabet.each do |letter|
-        build_lexical_permutations(find_remaining_alphabet(letter), current_string + [letter])
-        build_lexical_permutations(alphabet - [letter], current_string + [letter])
+        build_lexical_permutations(alphabet, current_string + [letter])
       end
     end
-
-    lexically_ordered_strings.uniq!
-    lexically_ordered_strings
-  end
-
-  def find_remaining_alphabet(letter)
-    beginning = alphabet.find_index(letter)
-    alphabet[beginning..-1]
   end
 end
 
