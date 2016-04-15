@@ -10,3 +10,11 @@ func TestGetInput(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestMakeCharacterCountMap(t *testing.T) {
+	dnaSequence := "ACGT"
+	characterMap := makeCharacterCountMap(dnaSequence)
+	if characterMap['A'] != 1 || characterMap['C'] != 1 || characterMap['G'] != 1 || characterMap['T'] != 1 {
+		t.Fail()
+	}
+}

@@ -16,18 +16,21 @@ func check(e error) {
 func getInput(filePath string) string {
 	raw, err := ioutil.ReadFile(filePath)
 	check(err)
-	text := string(raw)
-	return strings.TrimSpace(text)
+	return strings.TrimSpace(string(raw))
 }
 
-// TODO: break out the counting code into a function so you can easily test it
+func makeCharacterCountMap(dnaSequence string) map[rune]int {
+	countMap := make(map[rune]int)
+	for j := 0; j < len(dnaSequence); j++ {
+		letter := rune(dnaSequence[j])
+		countMap[letter]++
+	}
+	return countMap
+}
+
 func main() {
 	input := getInput(os.Args[1])
-	m := make(map[string]int)
-	for j := 0; j < len(input); j++ {
-		letter := string(input[j])
-		m[letter]++
-	}
+	countMap := makeCharacterCountMap(input)
 
-	fmt.Printf("%d %d %d %d\n", m["A"], m["C"], m["G"], m["T"])
+	fmt.Printf("%d %d %d %d\n", countMap['A'], countMap['C'], countMap['G'], countMap['T'])
 }
