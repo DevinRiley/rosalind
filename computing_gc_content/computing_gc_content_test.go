@@ -1,29 +1,55 @@
-package computing_gc_content
+package main
 
 import (
 	"fmt"
+	"strings"
 	"testing"
 )
-
-func TestComputeContent(t *testing.T) {
-	input := `CCACCCTCGTGGTATGGCTAGGCATTCAGGAACCGGAGAACGCTTCAGACCAGCCCGGACTGGGAACCTGCGGGCAGTAGGTGGAAT`
-	result := computeContent(input)
-	if result-60.919540 > 0.000001 {
-		t.Fail()
-	}
-}
 
 func TestParseFASTAWithOneLabel(t *testing.T) {
 	fastaInput := `>Rosalind_0808
 ACGT`
-	sequenceName, percentage := parseFASTA(fastaInput)
-
-	fmt.Printf("Name: %s\n", sequenceName)
+	reader := strings.NewReader(fastaInput)
+	sequenceName, percentage := parseFASTA(reader)
 
 	if sequenceName != "Rosalind_0808" {
 		t.Fail()
 	}
 	if percentage != 50.0 {
+		fmt.Printf("%f", percentage)
+		t.Fail()
+	}
+}
+
+func TestParseFASTAWithSeveralLabels(t *testing.T) {
+	fastaInput := `>Rosalind_1111
+AAAAA
+>Rosalind_2222
+CAC
+>Rosalind_3333
+CCCCCCCCCAAAAAAAAAACCCCCCCCC
+>Rosalind_4444
+CCCCCCCCCAAAAAAAAAACCCCCCCCC
+>Rosalind_5555
+CCCCCCCCCAAAAAAAAAACCCCCCCCC
+`
+	reader := strings.NewReader(fastaInput)
+	sequenceName, _ := parseFASTA(reader)
+
+	if sequenceName != "Rosalind_2222" {
+		t.Fail()
+	}
+}
+
+func TestParseFASTAPercentages(t *testing.T) {
+	fastaInput := `>Rosalind_0808
+CGAAAA`
+	reader := strings.NewReader(fastaInput)
+	sequenceName, percentage := parseFASTA(reader)
+	if sequenceName != "Rosalind_0808" {
+		t.Fail()
+	}
+	if percentage < 33.332 || percentage > 33.334 {
 		t.Fail()
 	}
 }
@@ -36,9 +62,8 @@ CCGG
 >Rosalind_0001
 TATATATATAATA`
 
-	sequenceName, percentage := parseFASTA(fastaInput)
-
-	fmt.Printf("Name: %s\n", sequenceName)
+	reader := strings.NewReader(fastaInput)
+	sequenceName, percentage := parseFASTA(reader)
 
 	if sequenceName != "Rosalind_0809" {
 		t.Fail()

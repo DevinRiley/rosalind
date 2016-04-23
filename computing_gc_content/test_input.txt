@@ -1,0 +1,4 @@
+>Rosalind_0809
+CCGG   
+>Rosalind_0001
+TATATATATAATA`
